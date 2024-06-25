@@ -3,7 +3,14 @@ document
   .addEventListener("submit", async function (event) {
     event.preventDefault();
 
-    const longUrl = document.getElementById("long-url").value;
+    const longUrlInput = document.getElementById("long-url");
+    const longUrl = longUrlInput.value;
+
+    if (!longUrl) {
+      alert("Please enter a valid URL.");
+      return;
+    }
+
     const response = await fetch("/shorten", {
       method: "POST",
       headers: {
@@ -23,6 +30,7 @@ document
       shortUrlAnchor.textContent = shortUrl;
 
       resultDiv.classList.remove("hidden");
+      longUrlInput.value = ""; // Clear the input field
     } else {
       alert("Failed to shorten URL. Please try again.");
     }
